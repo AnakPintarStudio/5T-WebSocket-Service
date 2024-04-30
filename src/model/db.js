@@ -13,15 +13,23 @@ class DB {
 	}
 
 	async hasTable(table) {
-		const hasTable = table == "" || table == null ? false : this.client.query(`SELECT to_regclass('schema_name.${table}');`);
+		try {
+			const hasTable = table == "" || table == null ? false : this.client.query(`SELECT to_regclass('schema_name.${table}');`);
 
-		const data = { status: hasTable !== null && hasTable !== false, message: `table ${hasTable ? "" : "not"} found` };
-		return Promise.resolve(data);
+			const data = { status: hasTable !== null && hasTable !== false, message: `table ${hasTable ? "" : "not"} found` };
+			return Promise.resolve(data);
+		} catch (e) {
+			return Promise.resolve({ status: false, message: e.message });
+		}
 	}
 
 	async query(query, values = null) {
-		if (values != null) return await this.client.query(query, values);
-		else return await this.client.query(query);
+		try {
+			if (values != null) return await this.client.query(query, values);
+			else return await this.client.query(query);
+		} catch (e) {
+			return Promise.resolve({ status: false, message: e.message });
+		}
 	}
 }
 
