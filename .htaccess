@@ -23,5 +23,5 @@ RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Everything else forwards as HTTP to the node app.
-ProxyPass / http://127.0.0.1:7222/
+ProxyPass / http://127.0.0.1:8765/
 ProxyPassReverse / http://127.0.0.1:8765/
