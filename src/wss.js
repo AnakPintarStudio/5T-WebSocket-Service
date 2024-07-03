@@ -16,7 +16,7 @@ module.exports = class WSS {
 		// catch 404 and forward to error handler
 		app.use((req, res, next) => {
 			console.log("Error handler called!");
-			next(createError(404));
+			if (next) next(createError(404));
 		});
 		// catch 404 and forward to error handler
 
