@@ -14,10 +14,10 @@ module.exports = class WSS {
 	create() {
 		const app = express();
 		// catch 404 and forward to error handler
-		app.use((req, res, next) => {
-			console.log("Error handler called!");
-			if (next) next(createError(404));
-		});
+		// app.use((req, res, next) => {
+		// 	console.log("Error handler called!");
+		// 	if (next) next(createError(404));
+		// });
 		// catch 404 and forward to error handler
 
 		const server = createServer(app);
