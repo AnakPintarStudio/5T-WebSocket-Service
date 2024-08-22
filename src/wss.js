@@ -49,7 +49,7 @@ module.exports = class WSS {
 				// console.log(data);
 				wss.clients.forEach(function each(client) {
 					// if (ws.readyState === WebSocket.OPEN) {
-					console.log(`${DateHelper.getCurrentDate()} | Broadcast to all users!`);
+					// console.log(`${DateHelper.getCurrentDate()} | Broadcast to all users!`);
 					client.send(data);
 					// }
 				});
