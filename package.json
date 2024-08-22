@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node app",
-		"start:pm2": "pm2 start app.js -c \"0 0 * * *\" --max-memory-restart 1024M --watch",
+		"start:pm2": "pm2 start app.js --cron \"0 0 * * *\" --max-memory-restart 1024M --watch",
 		"test:ws": "npx wscat -c ws://localhost:8765",
 		"dev": "cls & nodemon"
 	},
