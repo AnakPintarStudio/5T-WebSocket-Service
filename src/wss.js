@@ -45,10 +45,15 @@ module.exports = class WSS {
 
 		// Broadcast to all.
 		wss.broadcast = function broadcast(data) {
-			wss.clients.forEach(function each(client) {
-				console.log("Broadcast to all users!");
-				client.send(data);
-			});
+			if (data) {
+				// console.log(data);
+				wss.clients.forEach(function each(client) {
+					if (ws.readyState === WebSocket.OPEN) {
+						console.log(`${DateHelper.getCurrentDate()} | Broadcast to all users!`);
+						client.send(data);
+					}
+				});
+			}
 		};
 		// Broadcast to all.
 
@@ -73,7 +78,8 @@ module.exports = class WSS {
 							JSON.stringify(errResult),
 							(err) => {
 								if (err) {
-									console.log(err);
+									const currentDate = DateHelper.getCurrentDate();
+									console.log(`${currentDate} | ${err}`);
 								}
 								console.log("Error file saved");
 							},
@@ -85,9 +91,10 @@ module.exports = class WSS {
 					return;
 				}
 
-				console.log(`client ${token} joined.`);
-				console.log(connParams.data);
-				wss.broadcast(`client ${token} joined.`);
+				const currentDate = DateHelper.getCurrentDate();
+				console.log(`${currentDate} | client ${token} joined.`);
+				console.log(`${currentDate} | ${connParams.data}`);
+				wss.broadcast(`${currentDate} | client ${token} joined.`);
 
 				mapConnectedIp.set(token, ws);
 
@@ -100,14 +107,16 @@ module.exports = class WSS {
 
 				// On websocket has nicoming message
 				ws.on("message", function message(data) {
+					const currentDate = DateHelper.getCurrentDate();
+
 					if (typeof data === "string") {
 						// client sent a string
-						console.log("string received from client -> '" + data + "'");
+						console.log(`${currentDate} | string received from client -> '${data}'`);
 						wss.broadcast(data);
 					} else {
 						// client sent a bytecode
 						data = String.fromCharCode(...data);
-						console.log("Message on string -> " + data);
+						console.log(`${currentDate} | Message on string -> ${data}`);
 						wss.broadcast(data);
 					}
 
@@ -118,8 +127,9 @@ module.exports = class WSS {
 				// On websocket user has connection closed
 				ws.on("close", function close() {
 					mapConnectedIp.delete(token);
-					console.log(`client ${token} left.`);
-					wss.broadcast(`client ${token} left.`);
+					const currentDate = DateHelper.getCurrentDate();
+					console.log(`${currentDate} | client ${token} left.`);
+					wss.broadcast(`${currentDate} | client ${token} left.`);
 				});
 				// On websocket user has connection closed
 			} catch (e) {
