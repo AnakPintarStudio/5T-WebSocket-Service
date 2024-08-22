@@ -48,10 +48,10 @@ module.exports = class WSS {
 			if (data) {
 				// console.log(data);
 				wss.clients.forEach(function each(client) {
-					if (ws.readyState === WebSocket.OPEN) {
-						console.log(`${DateHelper.getCurrentDate()} | Broadcast to all users!`);
-						client.send(data);
-					}
+					// if (ws.readyState === WebSocket.OPEN) {
+					console.log(`${DateHelper.getCurrentDate()} | Broadcast to all users!`);
+					client.send(data);
+					// }
 				});
 			}
 		};
