@@ -112,12 +112,12 @@ module.exports = class WSS {
 					if (typeof data === "string") {
 						// client sent a string
 						console.log(`${currentDate} | string received from client -> '${data}'`);
-						wss.broadcast(data);
+						setImmediate(() => wss.broadcast(data));
 					} else {
 						// client sent a bytecode
 						data = String.fromCharCode(...data);
 						console.log(`${currentDate} | Message on string -> ${data}`);
-						wss.broadcast(data);
+						setImmediate(() => wss.broadcast(data));
 					}
 
 					RecordLogHandler.insert(data, data);
